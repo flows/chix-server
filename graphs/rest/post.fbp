@@ -1,0 +1,20 @@
+title: Post Flow
+package: rest
+name:    post
+
+PostSendFlow(express/send), PostInsertFlow(mongojs/insert)
+PostToString(json/stringify), PostValidateFlow(json/validate)
+PostFlowRoute(express/post)
+
+# /flows
+->        path PostFlowRoute
+-> ^collection PostInsertFlow
+->     ^schema PostValidateFlow
+->        ^app PostFlowRoute
+
+# Serve POST /flows
+PostFlowRoute res        ->      res PostSendFlow
+PostFlowRoute req [body] ->       in PostValidateFlow
+PostValidateFlow out     -> document PostInsertFlow
+PostInsertFlow docs      ->       in PostToString
+PostToString out         ->     body PostSendFlow

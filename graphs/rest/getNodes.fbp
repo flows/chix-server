@@ -1,0 +1,16 @@
+title:   Get All Nodes
+package: rest
+name:    getNodes
+
+NodesRoute(express/get), SendNodes(express/send)
+FindNodes(mongojs/findAll), NodesToString(json/stringify)
+
+# Serve /nodes
+->        path NodesRoute
+-> ^collection FindNodes
+->        ^app NodesRoute
+
+NodesRoute res      ->    res SendNodes
+NodesRoute res      -> :start FindNodes
+FindNodes documents ->     in NodesToString
+NodesToString out   ->   body SendNodes

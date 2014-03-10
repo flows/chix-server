@@ -1,0 +1,19 @@
+title: Serve /flows
+description: Serve All documents within a collection
+package: rest
+name:    getAll
+
+FindFlows(mongojs/findAll), FlowsToString(json/stringify)
+SendFlows(express/send), FlowsRoute(express/get)
+
+# path to server (/flows)
+->        path FlowsRoute
+
+# mongo db collection
+-> ^collection FindFlows
+->        ^app FlowsRoute
+
+FlowsRoute res            ->      :start FindFlows
+FindFlows documents       ->          in FlowsToString
+FlowsRoute res            ->         res SendFlows
+FlowsToString out         ->        body SendFlows

@@ -1,0 +1,16 @@
+title:   Delete Flow
+package: rest
+name:    delete
+
+DeleteSendFlow(express/send), DeleteFlowRoute(express/delete)
+DeleteFindFlow(mongojs/find), DeleteFlowToString(json/stringify)
+
+# Serve Delete /flows
+->        path DeleteFlowRoute
+->        ^app DeleteFlowRoute
+-> ^collection DeleteFindFlow
+
+DeleteFlowRoute res          ->      res DeleteSendFlow
+DeleteFlowRoute req [params] -> criteria DeleteFindFlow
+DeleteFindFlow documents     ->       in DeleteFlowToString
+DeleteFlowToString out       ->     body DeleteSendFlow

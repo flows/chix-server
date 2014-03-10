@@ -1,0 +1,86 @@
+title: MongoJS Find All
+description: Find All documents within a collection
+
+Db(mongojs/db), Close(mongojs/close), Log(console/log)
+ParseSchema(json/parse), FlowSchema(json/createSchema)
+
+# Collections
+
+FlowCollection(mongojs/collection)
+'twigs' -> @collection FlowCollection
+Db db   ->         ^db FlowCollection
+
+NodesCollection(mongojs/collection)
+'nodes' -> @collection NodesCollection
+Db db   ->         ^db NodesCollection
+
+# Express
+Express(express/app), Listen(express/listen)
+BodyParser(express/bodyParser)
+'' -> :start Express
+
+# Configure the port to listen on
+'5000'          ->    port Listen
+Express app     ->     app Listen
+
+# Sub Flows
+provider ./graphs/{ns}/{name}.fbp as x
+GetAll(x:rest/getAll)
+GetById(x:rest/getByParam)
+PutFlow(x:rest/put)
+PostFlow(x:rest/post)
+DeleteFlow(x:rest/delete)
+GetNodes(x:rest/getNodes)
+
+# Rather weird construction, more correct this flow
+# would handle the stream itself.
+Express app     ->     app BodyParser
+Express express -> express BodyParser
+
+# Db Setup
+'serve' ->  connection_string Db
+
+# Setup flow schema, used for validation
+'../chix-flow/schemas/map.json' ~> in ParseSchema
+ParseSchema                 out -> in FlowSchema
+
+# Serve /flows
+'/flows'                  ->        path GetAll
+Express app               ->        ^app GetAll
+FlowCollection collection -> ^collection GetAll
+
+# Serve /flows/:id
+'/flows/:id'               ->        path GetById
+Express app                ->        ^app GetById
+FlowCollection collection  -> ^collection GetById
+
+# Serve PUT /flows
+'/flows'                   ->        path PutFlow
+Express app                ->        ^app PutFlow
+'id'                       ->       ^pick PutFlow
+FlowSchema out             ->     ^schema PutFlow
+FlowCollection collection  -> ^collection PutFlow
+
+
+# Serve POST /flows, ok this just takes the full document
+# It should use pick just like put is doing..
+'/flows'                   ->        path PostFlow
+Express app                ->        ^app PostFlow
+FlowSchema out             ->     ^schema PostFlow
+FlowCollection collection  -> ^collection PostFlow
+
+# Serve Delete /flows, should also use pick for id..
+# The nice thing is we can use the route param for that.
+# so the route determines what we select to delete by.
+# hmz, /flows/:id with a put it would be nice if it then just
+# picks the :id from the post. I guess middleware could do that.
+'/flows'                   ->        path DeleteFlow
+Express app                ->        ^app DeleteFlow
+FlowCollection collection  -> ^collection DeleteFlow
+
+# Serve /nodes
+'/nodes'                   ->        path GetNodes
+Express app                ->        ^app GetNodes
+NodesCollection collection -> ^collection GetNodes
+
+#Db db -> ^db Close

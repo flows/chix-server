@@ -1,0 +1,25 @@
+{
+  "name": "chix-server",
+  "version": "0.0.1",
+  "description": "Flow Server for Chiχ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:psichi/chix-server.git"
+  },
+  "keywords": [
+    "chix",
+    "fbp",
+    "server"
+  ],
+  "author": "Rob Halff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/psichi/chix-server/issues"
+  },
+  "scripts": {
+    "start": "fbpx app.fbp"
+  }
+}

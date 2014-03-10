@@ -1,5 +1,5 @@
-title: MongoJS Find All
-description: Find All documents within a collection
+title: Chiχ Flow Server
+description: A rest server for flows
 
 Db(mongojs/db), Close(mongojs/close), Log(console/log)
 ParseSchema(json/parse), FlowSchema(json/createSchema)

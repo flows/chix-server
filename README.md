@@ -1,9 +1,14 @@
-Chiχ Loader
+Chiχ Flow Server
 =========
 
-This is the base component loader for Chiχ.
+This is a flow server for Chiχ.
 
-Extended by:
+To run this server you will have to have [fbpx](https://github.com/psichi/fbpx) installed.
 
- - [Chiχ Remote Loader](https://github.com/psichi/chix-loader-remote).
- - [Chiχ FS Loader](https://github.com/psichi/chix-loader-fs).
+```bash
+$ npm i fbpx -g
+```
+
+To run the flow either use `npm run` or use `fbpx app.fbp`
+
+Upon first run it will download the required dependencies.

@@ -41,8 +41,8 @@ Express express -> express BodyParser
 'serve' ->  connection_string Db
 
 # Setup flow schema, used for validation
-'../chix-flow/schemas/map.json' ~> in ParseSchema
-ParseSchema                 out -> in FlowSchema
+'schema.json'     ~> in ParseSchema
+ParseSchema   out -> in FlowSchema
 
 # Serve /flows
 '/flows'                  ->        path GetAll

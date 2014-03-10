@@ -11,4 +11,6 @@ $ npm i fbpx -g
 
 To run the flow either use `npm run` or use `fbpx app.fbp`
 
+Use `fbpx -v app.fbp` to start the server in a more verbose mode.
+
 Upon first run it will download the required dependencies.

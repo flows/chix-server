@@ -5,7 +5,6 @@ Db(mongojs/db), Close(mongojs/close), Log(console/log)
 ParseSchema(json/parse), FlowSchema(json/createSchema)
 
 # Collections
-
 FlowCollection(mongojs/collection)
 'twigs' -> @collection FlowCollection
 Db db   ->         ^db FlowCollection
@@ -17,6 +16,8 @@ Db db   ->         ^db NodesCollection
 # Express
 Express(express/app), Listen(express/listen)
 BodyParser(express/bodyParser)
+CORS(express/cors)
+
 '' -> :start Express
 
 # Configure the port to listen on
@@ -31,11 +32,15 @@ PutFlow(x:rest/put)
 PostFlow(x:rest/post)
 DeleteFlow(x:rest/delete)
 GetNodes(x:rest/getNodes)
+FindFlows(x:rest/findFlows)
 
 # Rather weird construction, more correct this flow
 # would handle the stream itself.
 Express app     ->     app BodyParser
 Express express -> express BodyParser
+
+Express app     ->     app CORS
+Express express -> express CORS
 
 # Db Setup
 'serve' ->  connection_string Db
@@ -49,6 +54,12 @@ ParseSchema   out -> in FlowSchema
 Express app               ->        ^app GetAll
 FlowCollection collection -> ^collection GetAll
 
+# Serve /find/flows
+'/find/flows'             ->        path FindFlows
+Express app               ->        ^app FindFlows
+FlowSchema out            ->     ^schema FindFlows
+FlowCollection collection -> ^collection FindFlows
+
 # Serve /flows/:id
 '/flows/:id'               ->        path GetById
 Express app                ->        ^app GetById
@@ -60,7 +71,6 @@ Express app                ->        ^app PutFlow
 'id'                       ->       ^pick PutFlow
 FlowSchema out             ->     ^schema PutFlow
 FlowCollection collection  -> ^collection PutFlow
-
 
 # Serve POST /flows, ok this just takes the full document
 # It should use pick just like put is doing..

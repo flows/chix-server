@@ -1,19 +1,19 @@
-title: Serve /flows
+title:       Get All
 description: Serve All documents within a collection
 package: rest
 name:    getAll
 
-FindFlows(mongojs/findAll), FlowsToString(json/stringify)
-SendFlows(express/send), FlowsRoute(express/get)
+Find(mongojs/findAll), ToString(json/stringify)
+Send(express/send), Route(express/get)
 
 # path to server (/flows)
-->        path FlowsRoute
+->        path Route
 
 # mongo db collection
--> ^collection FindFlows
-->        ^app FlowsRoute
+-> ^collection Find
+->        ^app Route
 
-FlowsRoute res            ->      :start FindFlows
-FindFlows documents       ->          in FlowsToString
-FlowsRoute res            ->         res SendFlows
-FlowsToString out         ->        body SendFlows
+Route res       ->  :start Find
+Find documents  ->      in ToString
+Route res       ->     res Send
+ToString out    ->    body Send

@@ -1,0 +1,55 @@
+title: Find /flows
+description: Find documents within a collection
+package: rest
+name:    findFlows
+
+Find(mongojs/findAll), ToString(json/stringify)
+Send(express/send), Route(express/get)
+OneOf(object/oneOf), Log(console/log)
+Validate(json/validate)
+
+# path to server (/flows)
+->        path Route
+
+# mongo db collection
+-> ^collection Find
+->        ^app Route
+->     ^schema Validate
+
+# real sollution is probably streams.
+# you shouldn't work on sets of documents.
+# which means I should just try and let mongojs output a
+# stream, then a sink for the documents and then just
+# send the output like normal. Besides from being faster
+# it would even be easier to do.
+
+["title","name"] -> @path OneOf
+
+Route res       -> :start Find
+Find documents  =>     in Validate
+
+# Ok here we start with 1 of the Documents at out.
+Validate out -> in OneOf out -> [value] in1 MergeValue(object/merge)
+Validate out -> in2 MergeValue
+
+OneOf error -> msg Log
+Validate out -> msg Log
+
+# value is now merged.
+MergeValue out [value] -> [0] in Arr(array/create)
+MergeValue out [ns]    -> [1] in Arr
+MergeValue out [name]  -> [2] in Arr
+
+# merge Document out
+Arr out        -> [tokens] in1 MergeTokens(object/merge)
+MergeValue out ->          in2 MergeTokens
+
+# Ok seems ok
+MergeTokens out   >= in ToString
+
+# TODO: Doesn't handle the case where all documents fail.. :-)
+#ValidateError out >= in ToString
+
+#Find documents       ->          in ToString
+Route res            ->         res Send
+ToString out         ->        body Send

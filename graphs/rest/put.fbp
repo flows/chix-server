@@ -1,26 +1,25 @@
-title: Put Document By Param
+title:   Document By Param
 package: rest
 name:    put
 
-PutFlowRoute(express/put), PutValidateFlow(json/validate)
-FilterId(object/pick), PutSendFlow(express/send)
-PutUpdateFlow(mongojs/update), PutToString(json/stringify)
+Route(express/put), Validate(json/validate)
+FilterId(object/pick), Send(express/send)
+Update(mongojs/update), ToString(json/stringify)
 
-# Serve PUT /flows
-->    path PutFlowRoute
--> ^schema PutValidateFlow
+->    path Route
+-> ^schema Validate
 
 # Take the id from the document
 -> ^pick FilterId
 
--> ^collection PutUpdateFlow
-->        ^app PutFlowRoute
+-> ^collection Update
+->        ^app Route
 
-PutFlowRoute res        ->      res PutSendFlow
-PutFlowRoute req [body] ->       in FilterId
-FilterId out            -> selector PutUpdateFlow
-PutFlowRoute req [body] ->       in PutValidateFlow
-PutValidateFlow out     -> document PutUpdateFlow
-PutUpdateFlow docs      ->       in PutToString
-PutValidateFlow error   ->       in PutToString
-PutToString out         ->     body PutSendFlow
+Route res        ->      res Send
+Route req [body] ->       in FilterId
+FilterId out     -> selector Update
+Route req [body] ->       in Validate
+Validate out     -> document Update
+Update docs      ->       in ToString
+Validate error   ->       in ToString
+ToString out     ->     body Send

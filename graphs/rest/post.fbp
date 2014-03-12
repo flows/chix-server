@@ -1,20 +1,20 @@
-title: Post Flow
+title: Post Document
 package: rest
 name:    post
 
-PostSendFlow(express/send), PostInsertFlow(mongojs/insert)
-PostToString(json/stringify), PostValidateFlow(json/validate)
-PostFlowRoute(express/post)
+Send(express/send), Insert(mongojs/insert)
+ToString(json/stringify), Validate(json/validate)
+Route(express/post)
 
-# /flows
-->        path PostFlowRoute
--> ^collection PostInsertFlow
-->     ^schema PostValidateFlow
-->        ^app PostFlowRoute
+->        path Route
+-> ^collection Insert
+->     ^schema Validate
+->        ^app Route
 
-# Serve POST /flows
-PostFlowRoute res        ->      res PostSendFlow
-PostFlowRoute req [body] ->       in PostValidateFlow
-PostValidateFlow out     -> document PostInsertFlow
-PostInsertFlow docs      ->       in PostToString
-PostToString out         ->     body PostSendFlow
+# Serve POST
+Route res        ->      res Send
+Route req [body] ->       in Validate
+Validate out     -> document Insert
+Validate error   ->       in ToString
+Insert docs      ->       in ToString
+ToString out     ->     body Send

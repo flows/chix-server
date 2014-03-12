@@ -1,22 +1,21 @@
-title: Get By Param
+title:       Get By Param
 description: Get Something by parameter from the collection
 package: rest
 name:    getByParam
 
-SendFlow(express/send), FlowRoute(express/get)
-FindFlow(mongojs/find), FlowToString(json/stringify)
+Send(express/send), Route(express/get)
+Find(mongojs/find), ToString(json/stringify)
 
-# Serve /flows/:id
 # route params determine what is searched.
-->        path FlowRoute
+->        path Route
 
 # An Express app
-->        ^app FlowRoute
+->        ^app Route
 
 # A MongoJS collection
--> ^collection FindFlow
+-> ^collection Find
 
-FlowRoute res          ->      res SendFlow
-FlowRoute req [params] -> criteria FindFlow
-FindFlow documents     ->       in FlowToString
-FlowToString out       ->     body SendFlow
+Route res          ->      res Send
+Route req [params] -> criteria Find
+Find documents     ->       in ToString
+ToString out       ->     body Send

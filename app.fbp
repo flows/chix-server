@@ -2,7 +2,8 @@ title: Chiχ Flow Server
 description: A rest server for flows
 
 Db(mongojs/db), Close(mongojs/close), Log(console/log)
-ParseSchema(json/parse), FlowSchema(json/createSchema)
+ParseFlowSchema(json/parse), FlowSchema(json/createSchema)
+ParseNodeSchema(json/parse), NodeSchema(json/createSchema)
 
 # Collections
 FlowCollection(mongojs/collection)
@@ -33,6 +34,7 @@ PostFlow(x:rest/post)
 DeleteFlow(x:rest/delete)
 GetNodes(x:rest/getNodes)
 FindFlows(x:rest/findFlows)
+FindNodes(x:rest/find)
 
 # Rather weird construction, more correct this flow
 # would handle the stream itself.
@@ -46,8 +48,10 @@ Express express -> express CORS
 'serve' ->  connection_string Db
 
 # Setup flow schema, used for validation
-'schema.json'     ~> in ParseSchema
-ParseSchema   out -> in FlowSchema
+'schema.json'     ~> in ParseFlowSchema
+'node.json'       ~> in ParseNodeSchema
+ParseFlowSchema   out -> in FlowSchema
+ParseNodeSchema   out -> in NodeSchema
 
 # Serve /flows
 '/flows'                  ->        path GetAll
@@ -57,8 +61,14 @@ FlowCollection collection -> ^collection GetAll
 # Serve /find/flows
 '/find/flows'             ->        path FindFlows
 Express app               ->        ^app FindFlows
-FlowSchema out            ->     ^schema FindFlows
+#FlowSchema out            ->     ^schema FindFlows
 FlowCollection collection -> ^collection FindFlows
+
+# Serve /find/nodes
+'/find/nodes'              ->        path FindNodes
+Express app                ->        ^app FindNodes
+#NodeSchema out             ->     ^schema FindNodes
+NodesCollection collection -> ^collection FindNodes
 
 # Serve /flows/:id
 '/flows/:id'               ->        path GetById

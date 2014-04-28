@@ -1,0 +1,53 @@
+{
+  "type":"object",
+  "title":"Chiχ Nodes",
+  "properties":{
+    "title": {
+      "type":"string",
+      "required": false
+    },
+    "description": {
+      "type":"string",
+      "required": false
+    },
+    "name": {
+      "type":"string",
+      "required": true
+    },
+    "ns": {
+      "type":"string",
+      "required": true
+    },
+    "require": {
+      "type":"object",
+      "required": false
+    },
+    "expose": {
+      "type":"array",
+      "required": false
+    },
+    "fn": {
+      "type":"string",
+      "required": false
+    },
+    "ports": {
+      "type":"object",
+      "required": true,
+      "properties":{
+        "input": {
+          "type":"object"
+        },
+        "output": {
+          "type":"object"
+        },
+        "event": {
+          "type":"object"
+        }
+      }
+    },
+    "type": {
+      "enum":["node","flow","provider","data"],
+      "required": false
+    }
+  }
+}

@@ -1,7 +1,7 @@
 title:       Find
 description: Find documents within a collection
 package: rest
-name:    findFlows
+name:    find
 
 Find(mongojs/findAll), ToString(json/stringify)
 Send(express/send), Route(express/get)
@@ -27,13 +27,10 @@ OneOf(object/oneOf), Log(console/log)
 ["title","name"] -> @path OneOf
 
 Route res       -> :start Find
-Find documents  -> in Empty(object/isEmpty) no => in Document(object/create)
-
-Empty yes -> in EmptyToString(data/string) out -> body Send
-
-Find documents -> msg Log(console/log)
+Find documents  =>     in Document(object/create)
 
 # Ok here we start with 1 of the Documents at out.
+# Ok nice this, is just because the node is rotten.
 Document out -> in OneOf out -> [value] in1 MergeValue(object/merge)
 Document out -> in2 MergeValue
 

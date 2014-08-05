@@ -21,6 +21,16 @@ CORS(express/cors)
 
 '' -> :start Express
 
+# Stuff like this you do not do in .fbp
+# It can be done with an integrating layer?
+# Let's only do the main stuff in .fbp
+# It's not part of the main functionality.
+# Which also defines how to do client side.
+# You create flows of functionality, then integrate those.
+# Reporting is part of decoration.
+# 'Server listening on port %s' -> [0] in ListenMsg(string/sprintf)
+# '5000'                        -> [1] in ListenMsg
+
 # Configure the port to listen on
 '5000'          ->    port Listen
 Express app     ->     app Listen
@@ -54,7 +64,7 @@ ParseFlowSchema   out -> in FlowSchema
 ParseNodeSchema   out -> in NodeSchema
 
 # Serve /flows
-'/flows'                  ->        path GetAll
+'/flows'                  ->       ^path GetAll
 Express app               ->        ^app GetAll
 FlowCollection collection -> ^collection GetAll
 

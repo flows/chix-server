@@ -26,7 +26,7 @@ OneOf(object/oneOf), Log(console/log)
 #["title","name"] -> ^path OneOf
 ["title","name"] -> @path OneOf
 
-Route res       -> :start Find
+Route *res       -> :start Find
 Find documents  =>     in Document(object/create)
 
 # Ok here we start with 1 of the Documents at out.
@@ -62,5 +62,5 @@ MergeTokens out   >= in ToString
 #ValidateError out >= in ToString
 
 #Find documents       ->          in ToString
-Route res            ->         res Send
-ToString out         ->        body Send
+Route *res            ->         res[Route] Send
+ToString out         ->        body[Route] Send

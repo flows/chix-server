@@ -13,7 +13,7 @@ Send(express/send), Route(express/get)
 -> ^collection Find
 ->        ^app Route
 
-Route res       ->  :start Find
+Route *res       ->  :start Find
 Find documents  ->      in ToString
-Route res       ->     res Send
-ToString out    ->    body Send
+Route *res       ->     res[Route] Send
+ToString out    ->     body[Route] Send

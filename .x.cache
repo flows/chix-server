@@ -1713,11 +1713,12 @@
     "https://api.chix.io/v1/nodes/{ns}/{name}": {
       "mongojs": {
         "db": {
-          "_id": "5b118ccaad75a1000fccd2dd",
-          "dependencies": {
-            "npm": {
-              "mongojs": "latest"
-            }
+          "_id": "5b1924b53bbb79000fdcfa8c",
+          "name": "db",
+          "ns": "mongojs",
+          "description": "mongojs database",
+          "phrases": {
+            "active": "Creating mongodb connection: {{input.in}}"
           },
           "ports": {
             "input": {
@@ -1734,20 +1735,25 @@
               }
             }
           },
-          "phrases": {
-            "active": "Creating mongodb connection: {{input.in}}"
+          "dependencies": {
+            "npm": {
+              "mongojs": "latest"
+            }
           },
-          "description": "mongojs database",
-          "ns": "mongojs",
-          "name": "db",
           "env": "server",
           "fn": "output = {\n  db: $.create(mongojs($.connection_string))\n}\n",
-          "id": "eb8b56ad-7c82-49ad-8cd3-0d78aad241ba",
+          "id": "8b75b6f0-4fc3-421e-b102-000abaedc741",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}",
           "title": "Db"
         },
         "close": {
-          "_id": "5b118ccaad75a1000fccd2db",
+          "_id": "5b1924b53bbb79000fdcfa8a",
+          "name": "close",
+          "ns": "mongojs",
+          "description": "mongojs close",
+          "phrases": {
+            "active": "Closing database connection"
+          },
           "ports": {
             "input": {
               "db": {
@@ -1757,20 +1763,20 @@
             },
             "output": {}
           },
-          "phrases": {
-            "active": "Closing database connection"
-          },
-          "description": "mongojs close",
-          "ns": "mongojs",
-          "name": "close",
           "env": "server",
           "fn": "output = function() {\n  $.db.close()\n}\n",
-          "id": "82402dae-c556-4170-9950-31e09826e80c",
+          "id": "11b59bc6-8903-438b-bbb8-22447d7bc97c",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}",
           "title": "Close"
         },
         "collection": {
-          "_id": "5b118ccaad75a1000fccd2dc",
+          "_id": "5b1924b53bbb79000fdcfa8b",
+          "name": "collection",
+          "ns": "mongojs",
+          "description": "mongojs collection",
+          "phrases": {
+            "active": "Opening the {{input.collection}} collection"
+          },
           "ports": {
             "input": {
               "collection": {
@@ -1795,20 +1801,20 @@
               }
             }
           },
-          "phrases": {
-            "active": "Opening the {{input.collection}} collection"
-          },
-          "description": "mongojs collection",
-          "ns": "mongojs",
-          "name": "collection",
           "env": "server",
           "fn": "output = {\n  collection: $.create($.db.collection($.collection))\n}\n",
-          "id": "1fe7338e-c82a-497c-8359-78211a1f1de3",
+          "id": "e3dccafe-bff5-4f28-a081-4911246ed7b5",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}",
           "title": "NodesCollection"
         },
         "findAll": {
-          "_id": "5b118ccaad75a1000fccd2df",
+          "_id": "5b1924b53bbb79000fdcfa8d",
+          "name": "findAll",
+          "ns": "mongojs",
+          "description": "MongoJS find all",
+          "phrases": {
+            "active": "Finding all documents"
+          },
           "ports": {
             "input": {
               "collection": {
@@ -1829,20 +1835,20 @@
               }
             }
           },
-          "phrases": {
-            "active": "Finding all documents"
-          },
-          "description": "MongoJS find all",
-          "ns": "mongojs",
-          "name": "findAll",
           "env": "server",
           "fn": "output = [$.collection, 'find']\n",
-          "id": "aee52c01-a6a4-4948-8bba-2b33cef07384",
+          "id": "828edc19-a1ca-4d54-92d8-3cfd680bf4c1",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}",
           "title": "Find"
         },
         "find": {
-          "_id": "5b118ccaad75a1000fccd2de",
+          "_id": "5b1924b53bbb79000fdcfa90",
+          "name": "find",
+          "ns": "mongojs",
+          "description": "mongojs find",
+          "phrases": {
+            "active": "Performing find based on the specified criteria"
+          },
           "ports": {
             "input": {
               "collection": {
@@ -1868,20 +1874,20 @@
               }
             }
           },
-          "phrases": {
-            "active": "Performing find based on the specified criteria"
-          },
-          "description": "mongojs find",
-          "ns": "mongojs",
-          "name": "find",
           "env": "server",
           "fn": "output = [$.collection, 'find', $.criteria]\n",
-          "id": "125ad329-de71-40b5-883d-425950b138d2",
+          "id": "57dfbc64-7d7c-434b-b6dc-4cf06751cc5a",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}",
           "title": "Find"
         },
         "update": {
-          "_id": "5b118ccaad75a1000fccd2e2",
+          "_id": "5b1924b53bbb79000fdcfa8e",
+          "name": "update",
+          "ns": "mongojs",
+          "description": "mongojs update",
+          "phrases": {
+            "active": "Updating document"
+          },
           "ports": {
             "input": {
               "collection": {
@@ -1913,20 +1919,20 @@
               }
             }
           },
-          "phrases": {
-            "active": "Updating document"
-          },
-          "description": "mongojs update",
-          "ns": "mongojs",
-          "name": "update",
           "env": "server",
           "fn": "output = [$.collection, 'update', $.selector, $.document]\n",
-          "id": "98184ca3-6107-4c2c-96a3-beba8606472b",
+          "id": "bf723ef3-9414-413e-97b5-8c73e361bc6e",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}",
           "title": "Update"
         },
         "insert": {
-          "_id": "5b118ccaad75a1000fccd2e0",
+          "_id": "5b1924b53bbb79000fdcfa8f",
+          "name": "insert",
+          "ns": "mongojs",
+          "description": "mongojs insert",
+          "phrases": {
+            "active": "Insering document into the collection"
+          },
           "ports": {
             "input": {
               "collection": {
@@ -1953,15 +1959,9 @@
               }
             }
           },
-          "phrases": {
-            "active": "Insering document into the collection"
-          },
-          "description": "mongojs insert",
-          "ns": "mongojs",
-          "name": "insert",
           "env": "server",
           "fn": "output = [$.collection, 'insert', $.document]\n",
-          "id": "27c79cae-919b-49fe-9f47-49a03e67a71f",
+          "id": "455d58c1-4f1b-4e97-bafc-13d36d091707",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}",
           "title": "Insert"
         }
@@ -2001,7 +2001,7 @@
       },
       "json": {
         "parse": {
-          "_id": "5b118ccaad75a1000fccd2a1",
+          "_id": "5b192d813bbb79000fdcfa9e",
           "name": "parse",
           "ns": "json",
           "title": "ParseNodeSchema",
@@ -2036,11 +2036,11 @@
             }
           },
           "fn": "/* output.out = JSON.parse($.in, $.reviver); */\n\non.input.in = function () {\n  output({out: $.write('in', JSON.parse($.in, state.reviver))});\n};\n\non.input.reviver = function () {\n  state.reviver = $.reviver;\n};\n",
-          "id": "2b7d31d8-e4e4-4627-9b41-e6e8d937f50d",
+          "id": "103afa37-3426-4d38-9b19-0da40375c141",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}"
         },
         "createSchema": {
-          "_id": "5b118ccaad75a1000fccd2a0",
+          "_id": "5b192d813bbb79000fdcfa9a",
           "name": "createSchema",
           "ns": "json",
           "title": "NodeSchema",
@@ -2074,11 +2074,11 @@
             }
           },
           "fn": "output.out = $.write('in', json_gate.createSchema($.in));\n",
-          "id": "7088f683-1141-4438-a154-7a4b158caa1f",
+          "id": "df6c91ee-0d5f-44dc-bed4-ab3209d37bc9",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}"
         },
         "stringify": {
-          "_id": "5b118ccaad75a1000fccd2a4",
+          "_id": "5b192d813bbb79000fdcfa9c",
           "name": "stringify",
           "ns": "json",
           "title": "ToString",
@@ -2117,12 +2117,12 @@
               }
             }
           },
-          "fn": "//output.out = JSON.stringify($. in , $.replacer, $.space);\non.input.in = function() {\n\n  output({\n    out: $.create(JSON.stringify($.in, $.replacer, $.space))\n  });\n\n};\n",
-          "id": "0c2adabc-6520-4e9f-af07-2969956e12d9",
+          "fn": "on.input.in = function() {\n  output({\n    out: $.write('in', JSON.stringify($.in, $.replacer, $.space))\n  });\n};\n",
+          "id": "73fcbd4b-d002-41c8-b5c3-63849ed00471",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}"
         },
         "validate": {
-          "_id": "5b118ccaad75a1000fccd2a6",
+          "_id": "5b192d813bbb79000fdcfa9f",
           "name": "validate",
           "ns": "json",
           "async": true,
@@ -2157,7 +2157,7 @@
             }
           },
           "fn": "on.input.in = function () {\n  try {\n    $.schema.validate($.in)\n    output({out: $.get('in')});\n  } catch(err) {\n    output({ error: $.create(err) });\n  }\n};\n",
-          "id": "da0c4ae9-cca7-4fb0-aa09-7ec3b876b7b1",
+          "id": "cce1e9e6-d10d-443a-a121-2f841160ee74",
           "provider": "https://api.chix.io/v1/nodes/{ns}/{name}"
         }
       },
